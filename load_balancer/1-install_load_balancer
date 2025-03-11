@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# this script automates an establishment of a load balancer using roundrobin alg
+
+sudo apt update -y
+sudo apt install -y haproxy
+sudo service haproxy enable
+sudo sed -i '$a\frontend front-web\n\tbind *:80\n\tdefault_backend backend-server\nbackend backend-server\n\tbalance roundrobin\n\tserver 6355-web-01 54.147.6.33:80 check\n\tserver 6355-web-02 3.86.34.43:80 check' /etc/haproxy/haproxy.cfg
+sudo service haproxy restart
